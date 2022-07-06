@@ -1,0 +1,6 @@
+The grid is solved if all the above statement are verified:
+✅ Each square is filled.
+✅ Each vertical and horizontal line contains the same number of 1 and 0.
+✅ Each vertical or horizontal line does not contains a sequence of 3 or more 0 or 1.
+✅ All rows are different from one to each others.
+✅ All cols are different from one to each others.
