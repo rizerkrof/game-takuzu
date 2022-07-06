@@ -123,12 +123,12 @@ class GameWidget(QWidget):
             return False
 
     def winPopup(self):
-        self.winPopup = QMessageBox(QMessageBox.Information, TEXT.GAME_WIN_TITLE, TEXT.GAME_WIN_MESSAGE)
+        self.winPopup = QMessageBox(QMessageBox.Information, TEXT.GAME_WIN_TITLE.value, TEXT.GAME_WIN_MESSAGE.value)
         self.winPopup.show()
         self.winPopup.setStandardButtons(QMessageBox.Ok)
 
     def losePopup(self):
-        self.losePopup = QMessageBox(QMessageBox.Information, TEXT.GAME_LOSE_TITLE, TEXT.GAME_LOSE_MESSAGE+'\n'+TEXT.GAME_TRY_AGAIN_MESSAGE)
+        self.losePopup = QMessageBox(QMessageBox.Information, TEXT.GAME_LOSE_TITLE.value, TEXT.GAME_LOSE_MESSAGE.value+'\n'+TEXT.GAME_TRY_AGAIN_MESSAGE.value)
         self.losePopup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         self.losePopup.show()
         if self.losePopup.exec()==QMessageBox.Yes:
