@@ -4,7 +4,7 @@ import sys
 rootPath = sys.path[0]
 
 # import libraries
-from PyQt5.QtWidgets                import QMainWindow, QAction, QMessageBox
+from PyQt5.QtWidgets                import QMainWindow, QAction, QMessageBox, QInputDialog
 from PyQt5.QtCore                   import QCoreApplication, Qt, QSize
 from PyQt5.QtGui                    import QIcon, QKeySequence
 
@@ -47,7 +47,7 @@ class Window(QMainWindow):
         gridMenu = menuBar.addMenu(TEXT.MENU_GRID_TITLE.value)
         gridMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_4BY4_TITLE.value, IMAGE_NAME.SUB_MENU_4BY4_ICON.value, KEY_BINDINGS.SUB_MENU_4BY4_SHORT_CUT.value, lambda: self.newGame(4, self.game.difficulty, self.game.random)))
         gridMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_6BY6_TITLE.value, IMAGE_NAME.SUB_MENU_6BY6_ICON.value, KEY_BINDINGS.SUB_MENU_6BY6_SHORT_CUT.value, lambda: self.newGame(6, self.game.difficulty, self.game.random)))
-        gridMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_CUSTOM_GRID_TITLE.value, IMAGE_NAME.SUB_MENU_CUSTOM_GRID_ICON.value, KEY_BINDINGS.SUB_MENU_CUSTOM_GRID_SHORT_CUT.value, self.empty))
+        gridMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_CUSTOM_GRID_TITLE.value, IMAGE_NAME.SUB_MENU_CUSTOM_GRID_ICON.value, KEY_BINDINGS.SUB_MENU_CUSTOM_GRID_SHORT_CUT.value, self.customGridSize))
         playMenu = menuBar.addMenu(TEXT.MENU_PLAY_TITLE.value)
         playMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_DIFFICULTY_EASY_TITLE.value, IMAGE_NAME.SUB_MENU_DIFFICULTY_EASY_ICON.value, KEY_BINDINGS.SUB_MENU_DIFFICULTY_EASY_SHORT_CUT.value, lambda: self.newGame(self.game.gridSize, DIFFICULTY.EASY.value, self.game.random)))
         playMenu.addAction(self._subMenuAction(TEXT.SUB_MENU_DIFFICULTY_HARD_TITLE.value, IMAGE_NAME.SUB_MENU_DIFFICULTY_HARD_ICON.value, KEY_BINDINGS.SUB_MENU_DIFFICULTY_HARD_SHORT_CUT.value, lambda: self.newGame(self.game.gridSize, DIFFICULTY.HARD.value, self.game.random)))
@@ -75,10 +75,15 @@ class Window(QMainWindow):
     def empty(self):
         pass
 
+    def customGridSize(self):
+        gridSize, done = QInputDialog.getText(self, 'Customize grid size', 'Enter the grid size (must be even, ex: 8): ')
+        if done:
+            if gridSize.isnumeric() and int(gridSize) % 2 == 0:
+                self.newGame(int(gridSize), self.game.difficulty, True)
+
     def newGame(self, gridSize, difficulty, random):
         self.game.initGame(gridSize, difficulty, random)
         gameWidget = self.gameWidget()
         gameWidget.updateLabels()
         gameWidget.updateGridButtonLayout()
         self.setCentralWidget(gameWidget)
-        pass

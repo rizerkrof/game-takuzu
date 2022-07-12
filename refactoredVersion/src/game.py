@@ -39,7 +39,8 @@ class Game():
         self.hints = self.initLivesAndHints()
         self.grid = [TILE.EMPTY.value for _ in range(self.gridSize**2)]
         # pre fill the grid with random samples
-        for rIndex in rd.sample(range(self.gridSize**2), 12 if self.gridSize == 6 else 6):
+        numberOfPreFilledTiles = math.ceil(self.gridSize**2 / 3)
+        for rIndex in rd.sample(range(self.gridSize**2), numberOfPreFilledTiles):
             if self.random:
                 self.grid[rIndex] = self.randomGrid[rIndex]
             else:
@@ -124,4 +125,3 @@ class Game():
             self.grid = gridTools.reshapeSquareGridToList(initRandomGrid)
         self.randomGrid = self.grid
         self.grid = []
-        print(self.randomGrid)
