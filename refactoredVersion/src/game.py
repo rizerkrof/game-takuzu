@@ -99,18 +99,29 @@ class Game():
         return gridTools.reshapeListToSquareGrid(self.grid, 'F')
 
     def initRandomGrid(self):
+        def getAllGoodToSwap(grid):
+            goodToSwap = []
+            for i in range(self.gridSize):
+                for j in range(self.gridSize):
+                    for k in range(self.gridSize):
+                        for l in range(self.gridSize):
+                            if i != k and j != l:
+                                if grid[i][j] == TILE.ONE.value and grid[i][j] != grid[i][l]:
+                                    if grid[i][j] == grid[k][l] and grid[k][j] == grid[i][l]:
+                                        goodToSwap.append((i, j, k, l))
+            return goodToSwap
+
         initRandomGrid = gridTools.createCustomCheckerBoard((self.gridSize, self.gridSize), (self.gridSize/2, self.gridSize/2))
         self.grid = gridTools.reshapeSquareGridToList(initRandomGrid)
         while not self.checkGridCompleted()[0]:
-            indexList = rd.sample(range(self.gridSize**2), 2)
-            tmp = self.grid[indexList[0]]
-            self.grid[indexList[0]] = self.grid[indexList[1]]
-            self.grid[indexList[1]] = tmp
-            if rd.randint(0, 1):
-                self.grid = gridTools.reshapeSquareGridToList(self.getGridCols())
-                print(self.getGridCols())
-            else:
-                self.grid = gridTools.reshapeSquareGridToList(self.getGridRows())
-                print(self.getGridRows())
+            allGoodToSwap = getAllGoodToSwap(initRandomGrid)
+            randomPositionsToSwap = np.random.randint(0, len(allGoodToSwap)-1)
+            i, j, k, l = allGoodToSwap[randomPositionsToSwap]
+            initRandomGrid[i][j] = TILE.ZERO.value
+            initRandomGrid[i][l] = TILE.ONE.value
+            initRandomGrid[k][l] = TILE.ZERO.value
+            initRandomGrid[k][j] = TILE.ONE.value
+            self.grid = gridTools.reshapeSquareGridToList(initRandomGrid)
         self.randomGrid = self.grid
+        self.grid = []
         print(self.randomGrid)
