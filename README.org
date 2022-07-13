@@ -1,0 +1,70 @@
+#+TITLE:   README
+#+DATE:    july 13, 2022
+#+STARTUP: inlineimages nofold
+
+* Table of Contents :TOC_3:noexport:
+- [[#description][Description]]
+  - [[#context][Context]]
+  - [[#project-specifications][Project specifications]]
+  - [[#maintainers][Maintainers]]
+- [[#prerequisites][Prerequisites]]
+  - [[#install-pyqt5][install PyQt5]]
+- [[#code-review-and-refactoring][Code review and refactoring]]
+  - [[#file-organization-][File organization 📂]]
+  - [[#monolithic-code-][Monolithic code 🗿]]
+  - [[#patterns-][Patterns ♻]]
+  - [[#use-enums-and-constants-][Use enums and constants 🗒]]
+  - [[#overall-good-practices-][Overall good practices 👍]]
+
+* Description
+This repository host a fully functional Takuzu game with a graphical user interface (GUI).
+** Context
+My sister had to make a Takuzu game with gui as part of a group python project at her engineering school. Once her project was finished she asked me to review her code and explain to her how to better organize the code in a project like this because she wants to improve in this area.
+In this repository you will therefore find two versions of the Takuzu game. Her version (/originalVersion) and my own version (/refactoredVersion). The goal here is to offer a first set of advice for better coding, good practices and better organizing your code. In the rest of this page I will explain the problems of the initial version and explain the choices I made to solve them.
+** Project specifications
++ Implement Takuzu game
++ Propose two size of board (4x4 and 6x6)
++ Propose two difficulty (easy and hard)
+  The difficulty is directly linked to the number of try you can make to verify if the board is correct.
++ The player can request hints to know what is wrong on the board at any moment.
+** Maintainers
++ [[https://github.com/rizerkrof][@Doudou]] (Author)
+
+* Prerequisites
++ Python 3.8
++ PyQt5
+** install PyQt5
+  #+begin_src sh
+pip install PyQt5
+  #+end_src
+* Code review and refactoring
+** File organization 📂
+After opening the 'originalVersion' folder, we can immediately notice that there is no architecture as all file are mixed together in the same folder. A good practice to take is to separate media assets, source code and scripts. This is a classic file architecture in software engineering that I really like to use.
++ The assets folder will contain all medias such as image, icons, videos or even long portion of text. Try to separate media by type and group them by features.
++ The script folder contains script that you can actually run. More precisely, files that will visually do something.
++ Finally, the source folder will contains all object or function needed to make all the scripts run correctly.
+** Monolithic code 🗿
+First of all, I can clearly understand that doing this kind of project on one file is totally ok because of the simplicity of the task. However, it is good to get into the good habit of segmenting your code even for smaller project.
+But how to segment code? In project with user interface we really want to separate code related to the core of the application and code related to GUI. This is needed to easily maintain the code in the future.
+I also recommend to make a file per class object and it's related functions. In fact, in the original version, all the code is structured under the class that handle the GUI window frame. Most of the function of this class doesn't have any link with GUI. This can be a serious problem if we want to add new features.
+To solve it I suggested to use the following architecture for the application.
++ application
+  + Core instance (handled by PyQt library)
+  + GUI main Window
+    + GUI views (home/game)
+    + Game engine
+Thus, now we know that we will need one file for the application class, another to handle the custom window class, one per view and a last one for the game engine. All these source file need to be grouped together either if it's related to GUI or not.
+** Patterns ♻
+Just by taking a quick look at the code we can identify repetition patterns in the original code.
+Recognizing pattern in your code can really help you to build useful function that implement this pattern. During the development, it is never a bad idea to create a function when you want to reuse a portion of code. This is call refactoring. Moreover, this will allow other developers to use the new function and win a lot of time.
+** Use enums and constants 🗒
+When a set of variables will only take known values it is better to use enums. This will allow you to add other possible value very easily. For example, the project specification require 2 difficulty for the game (easy and hard). Every variable representing difficulty will only take one of both values. However, in the future we might add other difficulties and will be easily possible by just adding a new value to the difficulty enum. The same process is applied to the value of the grid that are always '1', '0' or ' '
+This also allows you to implement multi language application and at the same time clean your code of strings value.
+Also, adding a configuration file is really useful to tune up the application easily than by going through the whole code.
+** Overall good practices 👍
++ Write meaningful variable and function names
+  This is one of the most recurrent mistake in the code. Meaningful name for variables and function is a first debugging step and can really improve the quality of your code.
++ Code should be self-sufficient
+  The way the code is written should demonstrate the process to accomplish the task a function is supposed to do. Adding comments brings more things to do when it comes to maintaining the code. However, for inevitable complex function, comments are well appreciated to describe more in depth the process.
++ Single responsibility principle
+  A function must do one only thing and do ut well. Please note that it is better to write understandable code than an optimized code.
