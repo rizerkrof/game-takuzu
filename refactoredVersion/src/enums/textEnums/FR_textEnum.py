@@ -13,6 +13,7 @@ class TEXT_FR(Enum):
     SUB_MENU_4BY4_TITLE = 'grille 4x4'
     SUB_MENU_6BY6_TITLE = 'grille 6x6'
     SUB_MENU_CUSTOM_GRID_TITLE = 'Grid personnalisée'
+    SUB_MENU_CUSTOM_GRID_MESSAGE = 'Entrer la taille de la grille (nombre pair requis, ex: 8): '
     SUB_MENU_DIFFICULTY_EASY_TITLE = 'Facile'
     SUB_MENU_DIFFICULTY_HARD_TITLE = 'Difficile'
     SUB_MENU_RANDOM_GRID_TITLE = 'Grille aléatoire'

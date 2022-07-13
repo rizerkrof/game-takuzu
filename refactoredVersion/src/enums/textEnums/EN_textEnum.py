@@ -13,6 +13,7 @@ class TEXT_EN(Enum):
     SUB_MENU_4BY4_TITLE = '4x4 grid'
     SUB_MENU_6BY6_TITLE = '6x6 grid'
     SUB_MENU_CUSTOM_GRID_TITLE = 'Chose grid size'
+    SUB_MENU_CUSTOM_GRID_MESSAGE = 'Enter the grid size (must be even, ex: 8): '
     SUB_MENU_DIFFICULTY_EASY_TITLE = 'Easy'
     SUB_MENU_DIFFICULTY_HARD_TITLE = 'Hard'
     SUB_MENU_RANDOM_GRID_TITLE = 'Random grid'

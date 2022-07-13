@@ -74,7 +74,8 @@ class Game():
     def checkGridNumbersDistributionInLines(self):
         for line in self.getGridRows() + self.getGridCols():
             if line.count(TILE.EMPTY.ZERO.value) != line.count(TILE.ONE.value):
-                return False, TEXT.GAME_GRID_NOT_VALID_ERROR_MESSAGE.value+TEXT.GAME_NUMBERS_DISTRIBUTION_ERROR_MESSAGE.value
+                message = TEXT.GAME_GRID_NOT_VALID_ERROR_MESSAGE.value+TEXT.GAME_NUMBERS_DISTRIBUTION_ERROR_MESSAGE.value
+                return False, message
         return True, TEXT.GAME_GRID_VALID_MESSAGE.value
 
     def checkGridSameNumberSequenceLength(self):
@@ -83,7 +84,8 @@ class Game():
             oneSequence = ''.join(map(str, [TILE.ONE.value for _ in range(3)])) # '111'
             zeroSequence = ''.join(map(str, [TILE.ZERO.value for _ in range(3)])) # '000'
             if lineString.find(oneSequence) != -1 or lineString.find(zeroSequence) != -1:
-                return False, TEXT.GAME_GRID_NOT_VALID_ERROR_MESSAGE.value+TEXT.GAME_LENGTH_NUMBER_SEQUENCE_ERROR_MESSAGE.value
+                message = TEXT.GAME_GRID_NOT_VALID_ERROR_MESSAGE.value+TEXT.GAME_LENGTH_NUMBER_SEQUENCE_ERROR_MESSAGE.value
+                return False, message
         return True, TEXT.GAME_GRID_VALID_MESSAGE.value
 
     def checkGridNoIdenticalLines(self, gridLines):

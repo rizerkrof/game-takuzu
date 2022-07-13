@@ -76,7 +76,7 @@ class Window(QMainWindow):
         pass
 
     def customGridSize(self):
-        gridSize, done = QInputDialog.getText(self, 'Customize grid size', 'Enter the grid size (must be even, ex: 8): ')
+        gridSize, done = QInputDialog.getText(self, TEXT.SUB_MENU_CUSTOM_GRID_TITLE.value, TEXT.SUB_MENU_CUSTOM_GRID_MESSAGE.value)
         if done:
             if gridSize.isnumeric() and int(gridSize) % 2 == 0:
                 self.newGame(int(gridSize), self.game.difficulty, True)
