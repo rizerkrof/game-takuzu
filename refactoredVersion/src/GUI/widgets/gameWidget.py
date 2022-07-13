@@ -44,7 +44,7 @@ class GameWidget(QWidget):
         gameInfosLayout.addWidget(self.livesLabel)
 
         self.hintsButton.setFixedSize(250, 100)
-        self.hintsButton.clicked.connect(self.empty)
+        self.hintsButton.clicked.connect(self.showHint)
         self.verifyButton.setFixedSize(250, 100)
         self.verifyButton.clicked.connect(self.checkGridCompleted)
         verificationButtonsLayout = QHBoxLayout()
@@ -120,7 +120,15 @@ class GameWidget(QWidget):
                 return False
             self.game.lives -= 1
             self.livesLabel.setText(TEXT.GAME_LIVES.value+': '+str(self.game.lives))
+            self.infosLabel.setText(message)
             return False
+
+    def showHint(self):
+        if self.game.hints > 0:
+            gridCompleted, message = self.game.checkGridCompleted()
+            self.game.hints -= 1
+            self.hintsLabel.setText(TEXT.GAME_HINTS.value+': '+str(self.game.hints))
+            self.infosLabel.setText(message)
 
     def winPopup(self):
         self.winPopup = QMessageBox(QMessageBox.Information, TEXT.GAME_WIN_TITLE.value, TEXT.GAME_WIN_MESSAGE.value)
